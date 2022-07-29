@@ -9,7 +9,7 @@
 
 ### 1.1 Lyric-to-Rhythm
 
-(1) Prepare lyric-to-rhythm dataset. (An example is available in directory `data/example`.)
+(1) Prepare lyric-to-rhythm dataset. We provide several examples in directory `data/en_example` and `data/zh_example`. Due to potential copyright issues, we cannot share the training data, but you can follow the pipeline mentioned in our [paper](https://arxiv.org/pdf/2109.09617.pdf) to get the training data.  
 
 (2) Train lyric-to-rhythm model.
 
@@ -17,6 +17,8 @@
    cd training/lyric2rhythm/
    bash train.sh data/example example 8192
    ```
+
+(UPDATE: We provide our [EN](https://msramllasc.blob.core.windows.net/modelrelease/lyric2rhythm_en_best.pt) and [ZH](https://msramllasc.blob.core.windows.net/modelrelease/lyric2rhythm_zh_best.pt) checkpoints , and corresponding dictionary in ` training/lyric2rhythm/dict`.)
 
 ### 1.2 Template-to-Melody
 
@@ -41,6 +43,8 @@
    bash preprocess.sh lmd_matched lmd_matched
    bash train.sh lmd_matched
    ```
+
+(UPDATE: [Here](https://msramllasc.blob.core.windows.net/modelrelease/template2melody_best.pt) we provide the template-to-melody model trained on lmd_matched dataset. )
 
 ## 2. Inference
 
@@ -82,7 +86,7 @@
    ```
 
    (3) Install `miditoolkit`.
-   
+
    ```shell
    pip uninstall miditoolkit
    python setup.py install
@@ -103,6 +107,8 @@
    (ZH):
    python infer_zh.py {zh_lyric2rhythm_prefix} {template2melody_prefix} {zh_data_prefix} {zh_save_prefix}
    ```
+
+UPDATE: we provide EN and ZH test set in ``test/``.  In ``test.melody``, we use every two number (x, y) to represent a note, where 0 < x  <129 is the pitch (128 if it is a rest note) and  y > 128 is the duration (corresponds to y - 128 beats).  ``test.chord`` is inferred through the algorithm proposed by [Magenta](https://github.com/magenta/note-seq/blob/master/note_seq/chord_inference.py).    
 
 ## 3. Evaluation
 
